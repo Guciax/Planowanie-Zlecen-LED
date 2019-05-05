@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Sprache, Version=1.10.0.35, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sprache.1.10.0.35\lib\net40\Sprache.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,16 +46,60 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="toml-net, Version=0.1.1.35632, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\toml-net.0.1.1.35632\lib\net40\toml-net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="CustomDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DevTools.cs" />
+    <Compile Include="EmailMsg.cs" />
+    <Compile Include="Forms\ChangeDate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
+    <Compile Include="Forms\ChangeDate.Designer.cs">
+      <DependentUpon>ChangeDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChangeQty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangeQty.Designer.cs">
+      <DependentUpon>ChangeQty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SummaryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SummaryForm.Designer.cs">
+      <DependentUpon>SummaryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImageProgressBar.cs" />
+    <Compile Include="ordersChanges.cs" />
+    <Compile Include="OrdersStatus.cs" />
+    <Compile Include="ProductionSmtNorms.cs" />
+    <Compile Include="ProductionTestNorms.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <EmbeddedResource Include="Forms\ChangeDate.resx">
+      <DependentUpon>ChangeDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangeQty.resx">
+      <DependentUpon>ChangeQty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SummaryForm.resx">
+      <DependentUpon>SummaryForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +109,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -73,7 +121,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Guciax\MST.MES\MST.MES\MST.MES.csproj">
+      <Project>{3A75370E-11B7-4582-A6AF-73CAF3A9E997}</Project>
+      <Name>MST.MES</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
