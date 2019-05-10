@@ -20,7 +20,7 @@ namespace Planowanie_Zlecen_LED
                 // set smtp-client with basicAuthentication
                 mySmtpClient.UseDefaultCredentials = false;
                 System.Net.NetworkCredential basicAuthenticationInfo = new
-                   System.Net.NetworkCredential("username", "password");
+                System.Net.NetworkCredential("username", "password");
 
                 mySmtpClient.Credentials = basicAuthenticationInfo;
 

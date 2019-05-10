@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static MST.MES.OrderStructureByOrderNo;
 
 namespace Planowanie_Zlecen_LED
 {
@@ -21,5 +22,30 @@ namespace Planowanie_Zlecen_LED
             mesModels = MST.MES.SqlDataReaderMethods.MesModels.allModels();
         }
 
+        public static MST.MES.Data_structures.DevToolsModelStructure TryGetDtModel00(string model10NC)
+        {
+            var dtModels = devToolsDb.Where(m => m.nc12 == model10NC + "00");
+            if (dtModels.Count() > 0)
+            {
+                return dtModels.First();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static MST.MES.Data_structures.DevToolsModelStructure TryGetDtModel46(string model10NC)
+        {
+            var dtModels = devToolsDb.Where(m => m.nc12 == model10NC + "46");
+            if (dtModels.Count() > 0)
+            {
+                return dtModels.First();
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

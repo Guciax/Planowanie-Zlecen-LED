@@ -55,6 +55,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DevTools.cs" />
+    <Compile Include="dgvTools.cs" />
     <Compile Include="EmailMsg.cs" />
     <Compile Include="Forms\ChangeDate.cs">
       <SubType>Form</SubType>
@@ -108,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -126,10 +128,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Guciax\MST.MES\MST.MES\MST.MES.csproj">
+    <ProjectReference Include="..\..\..\MST.MES\MST.MES\MST.MES.csproj">
       <Project>{3A75370E-11B7-4582-A6AF-73CAF3A9E997}</Project>
       <Name>MST.MES</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\spinner.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

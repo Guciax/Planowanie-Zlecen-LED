@@ -44,6 +44,7 @@
             // 
             // button1
             // 
+            this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.button1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.button1.Location = new System.Drawing.Point(0, 498);
             this.button1.Name = "button1";
@@ -51,6 +52,7 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Zatwierdź";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // SummaryForm
             // 

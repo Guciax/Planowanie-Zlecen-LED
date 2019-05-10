@@ -43,8 +43,12 @@ namespace Planowanie_Zlecen_LED.Forms
                                         + $"Zmieniona ilość na: {orderEntry.Value}szt."
                                         + Environment.NewLine);
                 richTextBox1.AppendText(Environment.NewLine);
-
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

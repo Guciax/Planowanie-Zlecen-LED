@@ -16,5 +16,7 @@ namespace Planowanie_Zlecen_LED
         }
 
         public bool userEnteredData { get; set; }
+
+
     }
 }
