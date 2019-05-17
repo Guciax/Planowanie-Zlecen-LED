@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Planowanie_Zlecen_LED
@@ -19,6 +15,55 @@ namespace Planowanie_Zlecen_LED
             if (progress < 0.6) return Color.FromArgb(255, 22, 160, 133);
             if (progress < 0.6) return Color.FromArgb(255, 39, 174, 96);
             return Color.FromArgb(255, 46, 204, 113);
+        }
+
+        private static Color ColorFromHex(string value)
+        {
+            return System.Drawing.ColorTranslator.FromHtml(value);
+        }
+
+        public static void CreateProgressbar2(float progress, int amount, DataGridViewImageCell cell, MST.MES.Colors.PaletteStruct clr)
+        {
+            Bitmap imageBar = new Bitmap(cell.Size.Width, cell.Size.Height);
+            int borderWidth = 2;
+            Rectangle cellBounds = new Rectangle(0, 0, cell.Size.Width, cell.Size.Height);
+            Rectangle insideBorder = new Rectangle(borderWidth, borderWidth, cellBounds.Width - borderWidth * 2, cellBounds.Height - borderWidth * 2);
+            if (progress > 1)
+            {
+                progress = 1;
+            }
+            int progressLength = (int)Math.Round(progress * (insideBorder.Width), 0);
+            Rectangle progressRectangle = new Rectangle(insideBorder.X, insideBorder.Y, progressLength, insideBorder.Height);
+            Rectangle backgroundRectangle = new Rectangle(progressRectangle.X + progressRectangle.Width + 1, insideBorder.Y, insideBorder.Width - progressLength - 1, insideBorder.Height);
+
+            Color borderColor = clr.dark;
+            Color progressColor = clr.mainLighter;
+            Color backgroundColor = clr.ultraLight;
+
+            Brush cellBorderBrush = new SolidBrush(borderColor);
+            Brush progressBrush = new SolidBrush(progressColor);
+            Brush cellBackgroundBrush = new SolidBrush(backgroundColor);
+
+            Font font = new Font(FontFamily.GenericSansSerif, 10);
+            string progressText = $"{Math.Round(progress * 100, 1)}% - {amount}szt.";
+
+            using (Graphics g = Graphics.FromImage(imageBar))
+            {
+                var textDimension = g.MeasureString(progressText, font);
+                g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                //border
+                g.Clear(borderColor);
+                //progress
+                g.FillRectangle(progressBrush, progressRectangle);
+                //background
+                if (progress < 1)
+                {
+                    g.FillRectangle(cellBackgroundBrush, backgroundRectangle);
+                }
+                g.DrawString(progressText, font, new SolidBrush(Color.Black), new Point(cellBounds.Width / 2 - (int)textDimension.Width / 2, cell.Size.Height / 2 - (int)textDimension.Height / 2));
+            }
+
+            cell.Value = imageBar;
         }
 
         public static void CreateProgressbar(float progress, int amount, DataGridViewImageCell cell)
@@ -65,18 +110,18 @@ namespace Planowanie_Zlecen_LED
                 return path;
             }
 
-            // top left arc  
+            // top left arc
             path.AddArc(arc, 180, 90);
 
-            // top right arc  
+            // top right arc
             arc.X = bounds.Right - diameter;
             path.AddArc(arc, 270, 90);
 
-            // bottom right arc  
+            // bottom right arc
             arc.Y = bounds.Bottom - diameter;
             path.AddArc(arc, 0, 90);
 
-            // bottom left arc 
+            // bottom left arc
             arc.X = bounds.Left;
             path.AddArc(arc, 90, 90);
 

@@ -11,6 +11,7 @@ namespace Planowanie_Zlecen_LED
     {
         public static List<MST.MES.Data_structures.DevToolsModelStructure> devToolsDb = new List<MST.MES.Data_structures.DevToolsModelStructure>();
         public static Dictionary<string, MST.MES.ModelInfo.ModelSpecification> mesModels = new Dictionary<string, MST.MES.ModelInfo.ModelSpecification>();
+        public static Dictionary<string, string> nc12ToCollective = new Dictionary<string, string>();
 
         public static void LoadDevToolsDb()
         {

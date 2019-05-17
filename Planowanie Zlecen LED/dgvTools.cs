@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Planowanie_Zlecen_LED
@@ -42,7 +40,7 @@ namespace Planowanie_Zlecen_LED
             foreach (DataGridViewRow row in grid.Rows)
             {
                 if (row.Cells["Koniec"].Value != null) break;
-                string model = row.Cells["NC12"].Value.ToString().Replace(" ","");
+                string model = row.Cells["NC12"].Value.ToString().Replace(" ", "");
                 var dtModel = MST.MES.DtTools.GetDtModel00(model, DevTools.devToolsDb);
                 if (dtModel == null)
                     continue;
@@ -77,10 +75,9 @@ namespace Planowanie_Zlecen_LED
         public static void SetUpDailySeparators(CustomDataGridView grid)
         {
             List<int> indexesOfSeparators = new List<int>();
-
-            for (int r = 1; r < grid.Rows.Count; r++) 
+            for (int r = 1; r < grid.Rows.Count; r++)
             {
-                if(grid.Rows[r - 1].Cells["Koniec"].Value != null) break;
+                if (grid.Rows[r - 1].Cells["Koniec"].Value != null) break;
                 if (grid.Rows[r].Cells["Plan"].Value == null) break;
                 DateTime previousDate = (DateTime)grid.Rows[r - 1].Cells["Plan"].Value;
                 DateTime currentDate = (DateTime)grid.Rows[r].Cells["Plan"].Value;
@@ -91,10 +88,12 @@ namespace Planowanie_Zlecen_LED
                 }
             }
 
-            for (int i = 0; i < indexesOfSeparators.Count; i++) 
+            for (int i = 0; i < indexesOfSeparators.Count; i++)
             {
                 grid.Rows.Insert(indexesOfSeparators[i]);
                 grid.Rows[indexesOfSeparators[i]].Height = 2;
+                grid.Rows[indexesOfSeparators[i]].Cells["SMT"].Value = new Bitmap(1, 1);
+                grid.Rows[indexesOfSeparators[i]].Cells["Spakowane"].Value = new Bitmap(1, 1);
 
                 foreach (DataGridViewCell cell in grid.Rows[indexesOfSeparators[i]].Cells)
                 {

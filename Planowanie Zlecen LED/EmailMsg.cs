@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Planowanie_Zlecen_LED
 {
-    class EmailMsg
+    internal class EmailMsg
     {
         public static void SendEmailMessage(string subject)
         {
@@ -45,7 +41,6 @@ namespace Planowanie_Zlecen_LED
 
                 mySmtpClient.Send(myMail);
             }
-
             catch (SmtpException ex)
             {
                 throw new ApplicationException

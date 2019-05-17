@@ -1,11 +1,6 @@
-﻿using MST.MES;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Planowanie_Zlecen_LED
 {
@@ -27,6 +22,7 @@ namespace Planowanie_Zlecen_LED
             public double connCT { get; set; }
             public double reflowCT { get; set; }
             public double outputPerHour { get; set; }
+
             //public ModelInfo.ModelSpecification modelSpec { get; set; }
             public Tuple<double, double> mbDimensionsLWmm { get; set; }
         }
@@ -34,8 +30,9 @@ namespace Planowanie_Zlecen_LED
         public static int CalculateProductionTime(string modelId, double productionQty)
         {
             var modelNorm = CalculateModelNormPerHour(modelId);
-
-            return (int)Math.Ceiling(productionQty * 60 / modelNorm.outputPerHour);
+            if (modelNorm != null)
+                return (int)Math.Ceiling(productionQty * 60 / modelNorm.outputPerHour);
+            return 0;
         }
 
         public static SmtEfficiencyNormStruct CalculateModelNormPerHour(string modelId, int siplaceHeads2or4 = 2)
@@ -57,7 +54,6 @@ namespace Planowanie_Zlecen_LED
                     {"SMT8",new SmtLineConfiguration(){lineName="SMT8", pcbReflowSpeed=90, carrierReflowSpeed=90, siplaceCph=15000, printerCt = 25, connCph =  1800 } },
                 };
 
-
             var dtModels = DevTools.devToolsDb.Where(rec => rec.nc12 == modelId + "00");
             if (dtModels.Count() == 0)
             {
@@ -66,14 +62,10 @@ namespace Planowanie_Zlecen_LED
 
             var dtModel = dtModels.First();//need smth better than first
 
-
-
             double reflowCT = 0;
             double siplaceCph = 0;
             double connCT = 0;
             int pcbLoadingUnloading = 15;
-
-
 
             mbDimensionsLWmm = MST.MES.DtTools.GetMbDimensions(dtModel);
             var ledCount = MST.MES.DtTools.GetLedCount(dtModel);
@@ -81,17 +73,14 @@ namespace Planowanie_Zlecen_LED
             var connCount = MST.MES.DtTools.GetConnCount(dtModel);
 
             string smtLine = "SMT2";
-            if(mbDimensionsLWmm.Item1>610 || mbDimensionsLWmm.Item2 > 450)
+            if (mbDimensionsLWmm.Item1 > 610 || mbDimensionsLWmm.Item2 > 450)
             {
                 smtLine = "SMT4";
             }
 
-
-                reflowCT = (double)(mbDimensionsLWmm.Item1 / 10) / (double)lineConfiguration[smtLine].pcbReflowSpeed * 60 + pcbLoadingUnloading;
-                siplaceCph = 50 * ledCount * pcbPerMB + 10000;
-                connCT = pcbPerMB * connCount * (3600 / (double)lineConfiguration[smtLine].connCph) + pcbLoadingUnloading;
-            
-
+            reflowCT = (double)(mbDimensionsLWmm.Item1 / 10) / (double)lineConfiguration[smtLine].pcbReflowSpeed * 60 + pcbLoadingUnloading;
+            siplaceCph = 50 * ledCount * pcbPerMB + 10000;
+            connCT = pcbPerMB * connCount * (3600 / (double)lineConfiguration[smtLine].connCph) + pcbLoadingUnloading;
 
             if (siplaceCph < 15000) siplaceCph = 15000;
             if (siplaceCph > lineConfiguration[smtLine].siplaceCph) siplaceCph = lineConfiguration[smtLine].siplaceCph;
@@ -100,7 +89,6 @@ namespace Planowanie_Zlecen_LED
             double lineCT = Math.Max(
                                     Math.Max(lineConfiguration[smtLine].printerCt, connCT),
                                     Math.Max(siplaceCT, reflowCT));
-
 
             return new SmtEfficiencyNormStruct()
             {
@@ -111,8 +99,5 @@ namespace Planowanie_Zlecen_LED
                 mbDimensionsLWmm = mbDimensionsLWmm
             };
         }
-
-
-        
     }
 }
